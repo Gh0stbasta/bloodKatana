@@ -2,7 +2,7 @@ const express = require("express");
 
 const server = express();
 
-server.use(express.static("frontend"));
+server.use(express.static("../frontend"));
 
 server.get("/api", (req, res) => {
   res.send("hier kommen die daten die wir wollen!");
