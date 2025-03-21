@@ -1,16 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BloodKatana</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Authentifizierung</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #ffffff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 2px 60px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .form-header h2 {
+            margin: 0;
+            font-size: 32px;
+        }
+        .form-header p {
+            font-size: 18px;
+            margin: 12px 0;
+        }
+        .social-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .social-button {
+            width: 48%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #D8D8D8;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #F9F9F9;
+        }
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #D8D8D8;
+            border-radius: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .form-group input:focus {
+            border-color: #6a11cb;
+            outline: none;
+        }
+        .checkbox-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .button {
+            width: 100%;
+            padding: 12px;
+            background-color: #6a11cb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #2575fc;
+        }
+        .footer {
+            margin-top: 16px;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #6a11cb;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <h1 class="site-title">BLOOD KATANA</h1>
 
-    <a href="/dashboard.html">Go to Dashboard</a>
+<div class="form-container">
+    <div class="form-header">
+        <h2>Willkommen zurück!</h2>
+        <p>Bitte geben Sie Ihre Daten ein, um sich anzumelden.</p>
+    </div>
+    <div class="social-buttons">
+        <div class="social-button"><i class="fab fa-apple"></i> Apple</div>
+        <div class="social-button"><i class="fab fa-google"></i> Google</div>
+        <div class="social-button"><i class="fab fa-facebook"></i> Facebook</div>
+    </div>
+    <div class="form-group">
+        <label for="username">Benutzername</label>
+        <input type="text" id="username" placeholder="Geben Sie Ihren Benutzernamen ein..." required>
+    </div>
+    <div class="form-group">
+        <label for="password">Passwort</label>
+        <input type="password" id="password" placeholder="••••••••" required>
+    </div>
+    <div class="checkbox-group">
+        <label>
+            <input type="checkbox"> Erinnern Sie mich
+        </label>
+        <a href="#">Passwort vergessen?</a>
+    </div>
+    <button type="submit" class="button">Anmelden</button>
+    <div class="footer">
+        <p>Noch kein Konto? <a href="#">Registrieren</a></p>
+    </div>
+</div>
 
-    <script src="/js/login.js"></script>
 </body>
 </html>

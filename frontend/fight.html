@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Katana - Kampfarena</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="arena-container">
+        <h1>Blood Katana - Kampfarena</h1>
+        <div class="arena">
+            <!-- Spieler -->
+            <div class="samurai player">
+                <img src="player_samurai.png" alt="Spieler Samurai">
+                <div class="hp-bar">
+                    <div id="playerHP" class="hp"></div>
+                </div>
+            </div>
+            <!-- Gegner -->
+            <div class="samurai enemy">
+                <img src="enemy_samurai.png" alt="Gegner Samurai">
+                <div class="hp-bar">
+                    <div id="enemyHP" class="hp"></div>
+                </div>
+            </div>
+        </div>
+        <div class="controls">
+            <button onclick="attack('katana')">Katana-Schnitt</button>
+            <button onclick="attack('schatten')">Schattenschlag</button>
+            <button onclick="attack('konter')">Konterhaltung</button>
+            <button onclick="attack('tod')">Todesstoß</button>
+        </div>
+        <div class="log">
+            <h2>Kampflog</h2>
+            <div id="logMessages"></div>
+        </div>
+    </div>
+    <script src="arena.js"></script>
+</body>
+</html>
