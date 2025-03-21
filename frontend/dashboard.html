@@ -4,145 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blood Katana Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Grundlegendes Styling */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #1a1a1a;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-
-        .dashboard-container {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .sidebar {
-            background: #2a2a2a;
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        .main-content {
-            background: #2a2a2a;
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        h2 {
-            color: #6a11cb;
-            margin-bottom: 16px;
-        }
-
-        .card {
-            background: #333;
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 16px;
-        }
-
-        .card h3 {
-            margin-top: 0;
-        }
-
-        .character-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-        }
-
-        .character-card {
-            text-align: center;
-            background: #444;
-            padding: 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .character-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(106, 17, 203, 0.5);
-        }
-
-        .leaderboard-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .leaderboard-table th, .leaderboard-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #555;
-        }
-
-        .leaderboard-table th {
-            background: #6a11cb;
-            color: #fff;
-        }
-
-        .leaderboard-table tr:hover {
-            background: #444;
-        }
-
-        .search-bar {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #6a11cb;
-            border-radius: 12px;
-            background: #333;
-            color: #fff;
-            margin-bottom: 16px;
-        }
-
-        .match-history {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .match-card {
-            background: #444;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-        }
-
-        .match-card.win {
-            border-left: 4px solid #4caf50;
-        }
-
-        .match-card.lose {
-            border-left: 4px solid #f44336;
-        }
-    </style>
+    <!-- CSS-Dateien einbinden -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
+    <!-- Swipe-Animation -->
+    <div id="swipeAnimation">
+        <video id="swipeVideo" autoplay muted>
+            <source src="images/gold-engel.mp4" type="video/mp4">
+            Dein Browser unterstützt das Video-Tag nicht.
+        </video>
+    </div>
+
+    <!-- Dashboard-Inhalt -->
     <div class="dashboard-container">
-        <!-- Sidebar -->
+        <!-- Sidebar (Charakterauswahl) -->
         <div class="sidebar">
             <h2>Charakterauswahl</h2>
             <div class="character-grid">
                 <div class="character-card">
-                    <img src="samurai1.png" alt="Samurai 1" width="100">
+                    <img src="images/samurai1.png" alt="Samurai 1" width="100">
                     <h3>Samurai 1</h3>
                     <p>Angriff: 80 | Verteidigung: 60</p>
                 </div>
                 <div class="character-card">
-                    <img src="samurai2.png" alt="Samurai 2" width="100">
+                    <img src="images/samurai2.png" alt="Samurai 2" width="100">
                     <h3>Samurai 2</h3>
                     <p>Angriff: 70 | Verteidigung: 70</p>
                 </div>
-                <!-- Weitere Charaktere -->
             </div>
         </div>
 
         <!-- Hauptinhalt -->
         <div class="main-content">
+            <!-- Leaderboard -->
             <h2>Leaderboard</h2>
             <table class="leaderboard-table">
                 <thead>
@@ -166,10 +62,10 @@
                         <td>45</td>
                         <td>15</td>
                     </tr>
-                    <!-- Weitere Einträge -->
                 </tbody>
             </table>
 
+            <!-- Spielerübersicht -->
             <h2>Spielerübersicht</h2>
             <input type="text" class="search-bar" placeholder="Spieler suchen...">
             <div class="card">
@@ -177,6 +73,7 @@
                 <p>Siegquote: 80% | Bevorzugter Samurai: Samurai 1</p>
             </div>
 
+            <!-- Spielverlauf -->
             <h2>Spielverlauf</h2>
             <div class="match-history">
                 <div class="match-card win">
@@ -185,11 +82,4 @@
                 </div>
                 <div class="match-card lose">
                     <p>Verloren gegen Player3</p>
-                    <p>Trefferquote: 50% | Kritische Treffer: 1</p>
-                </div>
-                <!-- Weitere Matches -->
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+                    <p>Trefferquote: 
