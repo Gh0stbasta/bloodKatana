@@ -61,13 +61,59 @@ db.run(
 
 const server = express();
 
+server.use(express.json());
 server.use(express.static("../frontend"));
 
-server.get("/api", (req, res) => {
-  res.send("hier kommen die daten die wir wollen!");
-  // ruf die datenbank
-  // bereite die daten auf
-  // sende die daten ans frontend
+server.get("/user", (req, res) => {
+  db.all(`SELECT * FROM user`, [], (err, rows) => {
+    if (err) {
+      console.error("Error fetching users:", err.message);
+      res.status(500).send("Internal Server Error");
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
+server.get("/charakter", (req, res) => {
+  db.all(`SELECT * FROM charakter`, [], (err, rows) => {
+    if (err) {
+      console.error("Error fetching charakter:", err.message);
+      res.status(500).send("Internal Server Error");
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
+// Endpoint zum Aktualisieren eines Benutzers
+server.put("/user/:id", (req, res) => {
+  const { id } = req.params; // Extrahiere die Benutzer-ID aus den URL-Parametern
+  const { siege, niederlagen } = req.body; // Extrahiere die neuen Werte aus dem Anfrage-Body
+
+  // Überprüfe, ob 'siege' und 'niederlagen' Zahlen sind
+  if (typeof siege !== "number" || typeof niederlagen !== "number") {
+    return res.status(400).send("Ungültige Eingabedaten");
+  }
+
+  // Aktualisiere die Tabelle 'user' mit den neuen Werten für 'siege' und 'niederlagen'
+  db.run(
+    `UPDATE user SET siege = ?, niederlagen = ? WHERE id = ?`,
+    [siege, niederlagen, id],
+    function (err) {
+      if (err) {
+        // Fehler protokollieren und 500-Statuscode senden, falls das Update fehlschlägt
+        console.error("Fehler beim Aktualisieren des Benutzers:", err.message);
+        res.status(500).send("Interner Serverfehler");
+      } else if (this.changes === 0) {
+        // 404-Statuscode senden, falls keine Zeilen aktualisiert wurden (Benutzer nicht gefunden)
+        res.status(404).send("Benutzer nicht gefunden");
+      } else {
+        // Erfolgsnachricht senden, falls das Update erfolgreich war
+        res.send("Benutzer erfolgreich aktualisiert");
+      }
+    }
+  );
 });
 
 // Start the server
