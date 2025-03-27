@@ -1,5 +1,9 @@
 const express = require("express");
 const sqlite3 = require("sqlite3");
+const http = require("http");
+const WebSocket = require("ws");
+const { json } = require("stream/consumers");
+
 // Initialize SQLite database
 const db = new sqlite3.Database("./database.db", (err) => {
   if (err) {
@@ -13,7 +17,7 @@ const db = new sqlite3.Database("./database.db", (err) => {
         passwort TEXT NOT NULL,
         siege INTEGER NOT NULL,
         niederlagen INTEGER NOT NULL
-        )`, 
+        )`,
       (err) => {
         if (err) {
           console.error("Error creating table:", err.message);
@@ -36,7 +40,7 @@ const db = new sqlite3.Database("./database.db", (err) => {
         angriffsschaden3 INTEGER NOT NULL,
         angriff4 TEXT NOT NULL,
         angriffsschaden4 INTEGER NOT NULL
-        )`, 
+        )`,
       (err) => {
         if (err) {
           console.error("Error creating table:", err.message);
@@ -47,19 +51,34 @@ const db = new sqlite3.Database("./database.db", (err) => {
     );
   }
 });
-db.run(
-  `DROP TABLE data`, 
-  (err) => {
-    if (err) {
-      console.error("Error deleting table:", err.message);
-    } else {
-      console.log("Table 'data' is deleted.");
-    }
-  }
-);
-
+// db.run(
+//   `DROP TABLE data`,
+//   (err) => {
+//     if (err) {
+//       console.error("Error deleting table:", err.message);
+//     } else {
+//       console.log("Table 'data' is deleted.");
+//     }
+//   }
+// );
 
 const server = express();
+const hauptserver = http.createServer(server);
+const wss = new WebSocket.Server({ server: hauptserver });
+
+wss.on("connection", (ws) => {
+  console.log("Neue WebSocket-Verbindung hergestellt.");
+
+  ws.on("message", (message) => {
+    console.log("Nachricht empfangen:", message);
+    // Hier unbedingt aus dem Frontendein JSON in folgendem Format senden: { attackierer: name, gegner: name, schaden: zahl }
+    ws.send(message);
+  });
+
+  ws.on("close", () => {
+    console.log("WebSocket-Verbindung geschlossen.");
+  });
+});
 
 server.use(express.json());
 server.use(express.static("../frontend"));
@@ -117,12 +136,12 @@ server.put("/user/:id", (req, res) => {
 });
 
 // Start the server
-server.listen(3000, () => {
+hauptserver.listen(3000, () => {
   console.log(`Server is running on http://localhost:3000`);
 });
 
 // db.run(
-//   `INSERT INTO user (name, passwort, siege, niederlagen) VALUES 
+//   `INSERT INTO user (name, passwort, siege, niederlagen) VALUES
 //   ('stefan', 'stefan', 0, 0),
 //   ('erwin', 'erwin', 0, 0),
 //   ('paria', 'paria', 0, 0),
