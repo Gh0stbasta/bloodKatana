@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Katana - Kampfarena</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/modern-styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Swipe-Animation -->
+    <div id="swipeAnimation">
+        <div class="swipe-effect"></div>
+    </div>
+
+    <!-- Arena-Container -->
+    <div class="arena-container">
+        <h1>Blood Katana - Kampfarena</h1>
+        
+        <!-- Kampfarena -->
+        <div class="arena">
+            <!-- Spieler-Kämpfer -->
+            <div id="playerFighter" class="samurai player health-normal">
+                <div class="fighter-info">
+                    <h3 class="fighter-name">Spieler Samurai</h3>
+                    <p class="fighter-stats">Angriff: 80 | Verteidigung: 60</p>
+                </div>
+                <img src="images/zustandgesund/Meister_Stefan.jpeg" alt="Spieler Samurai">
+                <div class="hp-bar">
+                    <div id="playerHP" class="health high" style="width: 100%;"></div>
+                </div>
+            </div>
+            
+            <!-- Kampfbereich Mitte -->
+            <div class="battle-area">
+                <div class="battle-effects"></div>
+            </div>
+            
+            <!-- Gegner-Kämpfer -->
+            <div id="enemyFighter" class="samurai enemy health-normal">
+                <div class="fighter-info">
+                    <h3 class="fighter-name">Gegner Samurai</h3>
+                    <p class="fighter-stats">Angriff: 70 | Verteidigung: 70</p>
+                </div>
+                <img src="images/zustandgesund/Volkutsu.jpg" alt="Gegner Samurai">
+                <div class="hp-bar">
+                    <div id="enemyHP" class="health high" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Steuerungselemente -->
+        <div class="controls">
+            <button class="btn attack-button" data-attack="katana">Katana-Schnitt</button>
+            <button class="btn attack-button" data-attack="schatten">Schattenschlag</button>
+            <button class="btn attack-button" data-attack="konter">Konterhaltung</button>
+            <button class="btn attack-button" data-attack="tod">Todesstoß</button>
+            <button class="btn" id="backToDashboard">Zurück zum Dashboard</button>
+        </div>
+        
+        <!-- Kampflog -->
+        <div class="log">
+            <h2>Kampflog</h2>
+            <div id="logMessages" class="log-messages"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/transitions.js"></script>
+    <script src="js/arena.js"></script>
+</body>
+</html>

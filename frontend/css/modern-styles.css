@@ -1,0 +1,741 @@
+/* modern-styles.css */
+/* Enthält alle Stile für das moderne, zukunftsorientierte Design des Samurai-KatanaBlood Frontends */
+
+/* Grundlegende Stile */
+:root {
+    --primary-color: #ff8c00;
+    --secondary-color: #ffd700;
+    --dark-color: #1a1a2e;
+    --light-color: #f0f0f0;
+    --accent-color: #e94560;
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --danger-color: #f44336;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-color);
+}
+
+/* Video-Hintergrund */
+#videoBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+#bgVideo {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+/* Glasmorphismus-Effekte */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 var(--glass-shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--dark-color);
+    border: none;
+    border-radius: 5px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0.5rem 0;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.btn-outline:hover {
+    background: var(--secondary-color);
+    color: var(--dark-color);
+}
+
+.btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Formularelemente */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 5px;
+    color: var(--light-color);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
+}
+
+.search-bar {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 25px;
+    color: var(--light-color);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
+}
+
+/* Login-Seite */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-form h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--secondary-color);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.error-message {
+    color: var(--danger-color);
+    background: rgba(244, 67, 54, 0.1);
+    padding: 0.8rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid var(--danger-color);
+}
+
+.mascot {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mascot img {
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+.mascot-options {
+    position: absolute;
+    bottom: 120%;
+    right: 0;
+    width: 200px;
+    display: none;
+}
+
+.mascot-options a {
+    display: block;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.mascot-options a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.mascot:hover .mascot-options {
+    display: block;
+}
+
+/* Dashboard-Seite */
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    opacity: 0;
+}
+
+.sidebar {
+    flex: 1;
+    min-width: 300px;
+    padding-right: 2rem;
+}
+
+.main-content {
+    flex: 2;
+    min-width: 300px;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.character-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.character-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+    transition: all 0.3s ease;
+}
+
+.character-card h3 {
+    font-size: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+.character-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--light-color);
+}
+
+.character-card .fight-button {
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+}
+
+.character-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.character-card:hover img {
+    transform: scale(1.05);
+}
+
+.character-card.selected {
+    box-shadow: 0 0 0 2px var(--secondary-color), 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card {
+    margin-bottom: 2rem;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.leaderboard-table th {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--secondary-color);
+}
+
+.leaderboard-table tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.player-profile {
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
+.player-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.stat-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-row.highlighted {
+    background: rgba(255, 215, 0, 0.1);
+    border-left: 3px solid var(--secondary-color);
+    padding-left: 0.5rem;
+}
+
+.match-history {
+    margin-top: 1rem;
+}
+
+.match-card {
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.match-card.win {
+    border-left: 3px solid var(--success-color);
+}
+
+.match-card.lose {
+    border-left: 3px solid var(--danger-color);
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.match-result {
+    font-weight: bold;
+}
+
+.match-card.win .match-result {
+    color: var(--success-color);
+}
+
+.match-card.lose .match-result {
+    color: var(--danger-color);
+}
+
+.match-details p {
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+}
+
+/* Arena-Seite */
+.arena-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.arena {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+    min-height: 400px;
+}
+
+.samurai {
+    flex: 1;
+    max-width: 300px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.samurai img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+
+.fighter-info {
+    margin-bottom: 1rem;
+}
+
+.hp-bar {
+    width: 100%;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.health {
+    height: 100%;
+    transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+.health.high {
+    background: linear-gradient(90deg, #4caf50, #8bc34a);
+}
+
+.health.medium {
+    background: linear-gradient(90deg, #ffc107, #ff9800);
+}
+
+.health.low {
+    background: linear-gradient(90deg, #f44336, #e91e63);
+}
+
+.battle-area {
+    flex: 2;
+    position: relative;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.battle-effects {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.log {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.log-messages {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: left;
+}
+
+.log-message {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.log-message.player {
+    background: rgba(76, 175, 80, 0.1);
+    border-left: 3px solid var(--success-color);
+}
+
+.log-message.enemy {
+    background: rgba(244, 67, 54, 0.1);
+    border-left: 3px solid var(--danger-color);
+}
+
+.log-message.system {
+    background: rgba(33, 150, 243, 0.1);
+    border-left: 3px solid #2196f3;
+}
+
+.attack-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+}
+
+/* Gesundheitszustände */
+.health-normal img {
+    border-color: var(--success-color);
+}
+
+.health-injured img {
+    border-color: var(--warning-color);
+    filter: saturate(0.7) contrast(1.2);
+}
+
+.health-critical img {
+    border-color: var(--danger-color);
+    filter: saturate(0.5) contrast(1.3) brightness(0.8);
+}
+
+/* Ergebnis-Display */
+.result-display {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.result-display.visible {
+    opacity: 1;
+}
+
+.result-display.victory {
+    background: radial-gradient(circle, rgba(76, 175, 80, 0.3), rgba(0, 0, 0, 0.8));
+}
+
+.result-display.defeat {
+    background: radial-gradient(circle, rgba(244, 67, 54, 0.3), rgba(0, 0, 0, 0.8));
+}
+
+.result-title {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.victory .result-title {
+    color: var(--success-color);
+}
+
+.defeat .result-title {
+    color: var(--danger-color);
+}
+
+.trophy-container, .medic-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin-bottom: 2rem;
+}
+
+.victor-fighter, .defeated-fighter {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.trophy {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: auto;
+    opacity: 0;
+}
+
+.medic {
+    position: absolute;
+    top: 50%;
+    left: -100px;
+    transform: translateY(-50%);
+    opacity: 0;
+}
+
+.medic img {
+    width: 100px;
+    height: auto;
+}
+
+.victory-text, .defeat-text {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        padding-right: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .arena {
+        flex-direction: column;
+    }
+    
+    .samurai {
+        margin-bottom: 2rem;
+    }
+    
+    .battle-area {
+        order: -1;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+    
+    .mascot {
+        position: static;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    
+    .mascot-options {
+        position: static;
+        display: block;
+        width: 100%;
+        margin-top: 1rem;
+    }
+    
+    .character-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .player-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .controls {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .result-title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-form h1 {
+        font-size: 2rem;
+    }
+    
+    .match-header {
+        flex-direction: column;
+    }
+    
+    .result-title {
+        font-size: 2.5rem;
+    }
+}

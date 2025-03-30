@@ -4,162 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blood Katana Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Grundlegendes Styling */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #1a1a1a;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-
-        .dashboard-container {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .sidebar {
-            background: #2a2a2a;
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        .main-content {
-            background: #2a2a2a;
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        h2 {
-            color: #6a11cb;
-            margin-bottom: 16px;
-        }
-
-        .card {
-            background: #333;
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 16px;
-        }
-
-        .card h3 {
-            margin-top: 0;
-        }
-
-        .character-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-        }
-
-        .character-card {
-            text-align: center;
-            background: #444;
-            padding: 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .character-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(106, 17, 203, 0.5);
-        }
-
-        .leaderboard-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .leaderboard-table th, .leaderboard-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #555;
-        }
-
-        .leaderboard-table th {
-            background: #6a11cb;
-            color: #fff;
-        }
-
-        .leaderboard-table tr:hover {
-            background: #444;
-        }
-
-        .search-bar {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #6a11cb;
-            border-radius: 12px;
-            background: #333;
-            color: #fff;
-            margin-bottom: 16px;
-        }
-
-        .match-history {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .match-card {
-            background: #444;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-        }
-
-        .match-card.win {
-            border-left: 4px solid #4caf50;
-        }
-
-        .match-card.lose {
-            border-left: 4px solid #f44336;
-        }
-    </style>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/modern-styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Swipe-Animation -->
     <div id="swipeAnimation">
-        <video id="swipeVideo" autoplay muted>
-            <source src="images/gold-engel.mp4" type="video/mp4">
-            Dein Browser unterstützt das Video-Tag nicht.
-        </video>
+        <div class="swipe-effect"></div>
     </div>
 
-    <!-- Dashboard-Inhalt -->
+    <!-- Dashboard-Container -->
     <div class="dashboard-container">
         <!-- Sidebar (Charakterauswahl) -->
         <div class="sidebar">
             <h2>Charakterauswahl</h2>
             <div class="character-grid">
-                <div class="character-card">
-                    <img src="images/zustandgesund/Meister_Stefan.jpeg" alt="Samurai 1" width="100">
-                    <h3>Sōgō no Shisha (総合の使者) – „Gesandter des Ganzen“</h3>
-                    <p>Angriff: 80 | Verteidigung: 60</p>
+                <div class="character-card" data-character="Sōgō no Shisha">
+                    <img src="images/zustandgesund/Meister_Stefan.jpeg" alt="Sōgō no Shisha">
+                    <h3>Sōgō no Shisha (総合の使者) – „Gesandter des Ganzen"</h3>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <span class="stat-value">80</span>
+                            <span class="stat-label">Angriff</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">60</span>
+                            <span class="stat-label">Verteidigung</span>
+                        </div>
+                    </div>
+                    <button class="btn fight-button">Kämpfen</button>
                 </div>
-                <div class="character-card">
-                    <img src="images/zustandgesund/Volkutsu.jpg" alt="Samurai 2" width="100">
-                    <h3>Ayatsurishi (操り師) – „Der Puppenspieler“</h3>
-                    <p>Angriff: 70 | Verteidigung: 70</p>
+                
+                <div class="character-card" data-character="Ayatsurishi">
+                    <img src="images/zustandgesund/Volkutsu.jpg" alt="Ayatsurishi">
+                    <h3>Ayatsurishi (操り師) – „Der Puppenspieler"</h3>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <span class="stat-value">70</span>
+                            <span class="stat-label">Angriff</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">70</span>
+                            <span class="stat-label">Verteidigung</span>
+                        </div>
+                    </div>
+                    <button class="btn fight-button">Kämpfen</button>
                 </div>
-                <div class="character-card">
-                    <img src="images/zustandgesund/Budukai_Beata.jpg" alt="Samurai 3" width="100">
+                
+                <div class="character-card" data-character="Bedy Yamiko">
+                    <img src="images/zustandgesund/Budukai_Beata.jpg" alt="Bedy Yamiko">
                     <h3>Bedy Yamiko 闇子 ベディ</h3>
-                    <p>Angriff: 150 | Verteidigung: 100</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <span class="stat-value">150</span>
+                            <span class="stat-label">Angriff</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">100</span>
+                            <span class="stat-label">Verteidigung</span>
+                        </div>
+                    </div>
+                    <button class="btn fight-button">Kämpfen</button>
                 </div>
-                <div class="character-card">
-                    <img src="images/zustandgesund/Ninja_Pari.jpg" alt="Samurai 4" width="100">
+                
+                <div class="character-card" data-character="Utsushi no Oni">
+                    <img src="images/zustandgesund/Ninja_Pari.jpg" alt="Utsushi no Oni">
                     <h3>Utsushi no Oni - Dämon der Nachahmung</h3>
-                    <p>Angriff: 200 | Verteidigung: 200</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <span class="stat-value">200</span>
+                            <span class="stat-label">Angriff</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">200</span>
+                            <span class="stat-label">Verteidigung</span>
+                        </div>
+                    </div>
+                    <button class="btn fight-button">Kämpfen</button>
                 </div>
-                <div class="character-card">
-                    <img src="images/zustandgesund/berserkerwin_.jpg" alt="Samurai 5" width="100">
-                    <h3>Kōgei no Shinobi (工芸の忍び) – „Ninja der Kunstfertigkeit“</h3>
-                    <p>Angriff: 1000 | Verteidigung: 5000</p>
+                
+                <div class="character-card" data-character="Kōgei no Shinobi">
+                    <img src="images/zustandgesund/berserkerwin_.jpg" alt="Kōgei no Shinobi">
+                    <h3>Kōgei no Shinobi (工芸の忍び) – „Ninja der Kunstfertigkeit"</h3>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <span class="stat-value">1000</span>
+                            <span class="stat-label">Angriff</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">5000</span>
+                            <span class="stat-label">Verteidigung</span>
+                        </div>
+                    </div>
+                    <button class="btn fight-button">Kämpfen</button>
                 </div>
             </div>
         </div>
@@ -167,47 +107,174 @@
         <!-- Hauptinhalt -->
         <div class="main-content">
             <!-- Leaderboard -->
-            <h2>Leaderboard</h2>
-            <table class="leaderboard-table">
-                <thead>
-                    <tr>
-                        <th>Rang</th>
-                        <th>Spielername</th>
-                        <th>Siege</th>
-                        <th>Niederlagen</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Player1</td>
-                        <td>50</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Player2</td>
-                        <td>45</td>
-                        <td>15</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="card">
+                <h2>Leaderboard</h2>
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rang</th>
+                            <th>Spielername</th>
+                            <th>Siege</th>
+                            <th>Niederlagen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Player1</td>
+                            <td>50</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Player2</td>
+                            <td>45</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Player3</td>
+                            <td>40</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Player4</td>
+                            <td>35</td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Player5</td>
+                            <td>30</td>
+                            <td>30</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Spielerübersicht -->
-            <h2>Spielerübersicht</h2>
-            <input type="text" class="search-bar" placeholder="Spieler suchen...">
             <div class="card">
-                <h3>Spielerprofil: Player1</h3>
-                <p>Siegquote: 80% | Bevorzugter Samurai: Samurai 1</p>
+                <h2>Spielerübersicht</h2>
+                <input type="text" class="search-bar" placeholder="Spieler suchen...">
+                <div class="player-profile">
+                    <h3>Spielerprofil: Player1</h3>
+                    <p>Siegquote: 80% | Bevorzugter Samurai: Sōgō no Shisha</p>
+                    
+                    <div class="player-stats">
+                        <div class="stat-group">
+                            <h4>Kampfstatistiken</h4>
+                            <div class="stat-row">
+                                <span class="stat-label">Gewonnene Kämpfe:</span>
+                                <span class="stat-value">50</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Verlorene Kämpfe:</span>
+                                <span class="stat-value">10</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Siegquote:</span>
+                                <span class="stat-value">83.3%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-group">
+                            <h4>Charakternutzung</h4>
+                            <div class="stat-row">
+                                <span class="stat-label">Sōgō no Shisha:</span>
+                                <span class="stat-value">60%</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Ayatsurishi:</span>
+                                <span class="stat-value">20%</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Bedy Yamiko:</span>
+                                <span class="stat-value">10%</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Utsushi no Oni:</span>
+                                <span class="stat-value">5%</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Kōgei no Shinobi:</span>
+                                <span class="stat-value">5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Spielverlauf -->
-            <h2>Spielverlauf</h2>
-            <div class="match-history">
-                <div class="match-card win">
-                    <p>Gewonnen gegen Player2</p>
-                    <p>Trefferquote: 70% | Kritische Treffer: 3</p>
+            <div class="card">
+                <h2>Spielverlauf</h2>
+                <div class="match-history">
+                    <div class="match-card win">
+                        <div class="match-header">
+                            <span class="match-result">Sieg</span>
+                            <span class="match-opponent">gegen Player2</span>
+                            <span class="match-date">29.03.2025</span>
+                        </div>
+                        <div class="match-details">
+                            <p>Trefferquote: 70% | Kritische Treffer: 3</p>
+                            <p>Verwendeter Samurai: Sōgō no Shisha</p>
+                        </div>
+                    </div>
+                    
+                    <div class="match-card lose">
+                        <div class="match-header">
+                            <span class="match-result">Niederlage</span>
+                            <span class="match-opponent">gegen Player3</span>
+                            <span class="match-date">28.03.2025</span>
+                        </div>
+                        <div class="match-details">
+                            <p>Trefferquote: 45% | Kritische Treffer: 1</p>
+                            <p>Verwendeter Samurai: Ayatsurishi</p>
+                        </div>
+                    </div>
+                    
+                    <div class="match-card win">
+                        <div class="match-header">
+                            <span class="match-result">Sieg</span>
+                            <span class="match-opponent">gegen Player4</span>
+                            <span class="match-date">27.03.2025</span>
+                        </div>
+                        <div class="match-details">
+                            <p>Trefferquote: 65% | Kritische Treffer: 2</p>
+                            <p>Verwendeter Samurai: Sōgō no Shisha</p>
+                        </div>
+                    </div>
+                    
+                    <div class="match-card win">
+                        <div class="match-header">
+                            <span class="match-result">Sieg</span>
+                            <span class="match-opponent">gegen Player5</span>
+                            <span class="match-date">26.03.2025</span>
+                        </div>
+                        <div class="match-details">
+                            <p>Trefferquote: 80% | Kritische Treffer: 4</p>
+                            <p>Verwendeter Samurai: Bedy Yamiko</p>
+                        </div>
+                    </div>
+                    
+                    <div class="match-card lose">
+                        <div class="match-header">
+                            <span class="match-result">Niederlage</span>
+                            <span class="match-opponent">gegen Player2</span>
+                            <span class="match-date">25.03.2025</span>
+                        </div>
+                        <div class="match-details">
+                            <p>Trefferquote: 40% | Kritische Treffer: 0</p>
+                            <p>Verwendeter Samurai: Utsushi no Oni</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="match-card lose">
-                    <p>Verloren gegen Player3</p>
-                    <p>Trefferquote: 
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/transitions.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

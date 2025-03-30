@@ -1,0 +1,93 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #1a1a1a;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    text-align: center;
+    background: #2a2a2a;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px; /* Container-Breite begrenzen */
+}
+
+.login-form input {
+    width: calc(100% - 24px); /* Breite anpassen (Padding abziehen) */
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #6a11cb;
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+    font-size: 16px;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 12px;
+    background: #6a11cb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.login-form button:hover {
+    background: #2575fc;
+}
+
+.mascot {
+    position: fixed;
+    bottom: 40px; /* Höher positionieren */
+    right: 40px; /* Weiter nach innen rücken */
+    cursor: pointer;
+    z-index: 1000; /* Sicherstellen, dass es über anderen Elementen liegt */
+}
+
+.mascot img {
+    width: 80px; /* Größe des Maskottchens anpassen */
+    height: auto;
+    transition: transform 0.3s; /* Animation beim Hovern */
+}
+
+.mascot:hover img {
+    transform: scale(1.1); /* Maskottchen leicht vergrößern */
+}
+
+.mascot-options {
+    display: none;
+    position: absolute;
+    bottom: 100%; /* Links über dem Maskottchen anzeigen */
+    right: 0;
+    background: #333;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.mascot:hover .mascot-options,
+.mascot-options:hover {
+    display: block; /* Links anzeigen, solange gehovert wird */
+}
+
+.mascot-options a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.mascot-options a:hover {
+    background: #6a11cb;
+    border-radius: 4px;
