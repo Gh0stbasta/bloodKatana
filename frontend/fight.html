@@ -8,33 +8,41 @@
 </head>
 <body>
     <div class="arena-container">
-        <h1>Blood Katana - Kampfarena</h1>
+        <h1 class="fight-title">Blood Katana - Kampfarena</h1>
         <div class="arena">
             <!-- Spieler -->
-            <div class="samurai player">
-                <img src="player_samurai.png" alt="Spieler Samurai">
+            <div class="samurai play">
+                <h2 class="char-name">Paria</h2>
+                <img class="fight-hero-img" src="/frontend/images/zustandgesund/paria_idle.webp" alt="Spieler Samurai">
                 <div class="hp-bar">
                     <div id="playerHP" class="hp"></div>
+                </div>
+                <div class="controls">
+                    <button id="attack-1-player" onclick="attack('katana')">Katana-Schnitt</button>
+                    <button id="attack-2-player" onclick="attack('schatten')">Schattenschlag</button>
+                    <button id="attack-3-player" onclick="attack('konter')">Konterhaltung</button>
+                    <button id="attack-4-player" onclick="attack('tod')">Todesstoß</button>
                 </div>
             </div>
             <!-- Gegner -->
             <div class="samurai enemy">
-                <img src="enemy_samurai.png" alt="Gegner Samurai">
+                <h2 class="char-name">Erwin</h2>
+                <img class="fight-hero-img" src="/frontend/images/zustandgesund/erwin_idle.webp" alt="Gegner Samurai">
                 <div class="hp-bar">
                     <div id="enemyHP" class="hp"></div>
                 </div>
+                <div class="controls">
+                    <button id="attack-1-enemy" onclick="attack('katana')">Katana-Schnitt</button>
+                    <button id="attack-2-enemy" onclick="attack('schatten')">Schattenschlag</button>
+                    <button id="attack-3-enemy" onclick="attack('konter')">Konterhaltung</button>
+                    <button id="attack-4-enemy" onclick="attack('tod')">Todesstoß</button>
+                </div>
             </div>
-        </div>
-        <div class="controls">
-            <button onclick="attack('katana')">Katana-Schnitt</button>
-            <button onclick="attack('schatten')">Schattenschlag</button>
-            <button onclick="attack('konter')">Konterhaltung</button>
-            <button onclick="attack('tod')">Todesstoß</button>
         </div>
         <div class="log">
             <h2>Kampflog</h2>
             <div id="logMessages"></div>
         </div>
     </div>
-    <script src="arena.js"></script>
+    <script src="/frontend/js/arena.js"></script>
 </body>
