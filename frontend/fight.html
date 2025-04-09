@@ -12,13 +12,13 @@
         <div class="arena">
             <!-- Spieler -->
             <div class="samurai play">
-                <h2 class="char-name">Paria</h2>
+                <h2 id="player-name" class="char-name"></h2>
                 <img class="fight-hero-img" src="/frontend/images/zustandgesund/paria_idle.webp" alt="Spieler Samurai">
                 <div class="hp-bar">
                     <div id="playerHP" class="hp"></div>
                 </div>
                 <div class="controls">
-                    <button id="attack-1-player" onclick="attack('katana')">Katana-Schnitt</button>
+                    <button id="attack-1-player" onclick="attack('katana')"></button>
                     <button id="attack-2-player" onclick="attack('schatten')">Schattenschlag</button>
                     <button id="attack-3-player" onclick="attack('konter')">Konterhaltung</button>
                     <button id="attack-4-player" onclick="attack('tod')">Todesstoß</button>
@@ -26,7 +26,7 @@
             </div>
             <!-- Gegner -->
             <div class="samurai enemy">
-                <h2 class="char-name">Erwin</h2>
+                <h2 id="enemy-name" class="char-name"></h2>
                 <img class="fight-hero-img" src="/frontend/images/zustandgesund/erwin_idle.webp" alt="Gegner Samurai">
                 <div class="hp-bar">
                     <div id="enemyHP" class="hp"></div>

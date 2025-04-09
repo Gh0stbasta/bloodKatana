@@ -8,8 +8,13 @@ const attack2EnemyButton = document.getElementById("attack-2-enemy");
 const attack3EnemyButton = document.getElementById("attack-3-enemy");
 const attack4EnemyButton = document.getElementById("attack-4-enemy");
 
+
+
 const player = "Utsushi no Oni";
-const enemey = "Kōgei no Shinobi";
+const enemy = "Kōgei no Shinobi";
+const attackePlayer1 = "lecki";
+
+
 
 fetch("http://localhost:3000/charakter", {
   method: "GET",
@@ -26,7 +31,20 @@ fetch("http://localhost:3000/charakter", {
   })
   .then((data) => {
     console.log("Character data:", data);
-    // You can process the data here
+    const playerName = document.getElementById("player-name");
+    playerName.textContent = player
+
+    const enemyName = document.getElementById("enemy-name");
+    enemyName.textContent = enemy
+
+    const angriffPlayer1 = document.getElementById("attack-1-player");
+    angriffPlayer1.textContent = attackePlayer1
+
+    // hier müssen wir grade die attacke aus der Datenbank reinschreiben und nicht hardgecodet wie in Zeile 15
+
+
+
+
   })
   .catch((error) => {
     console.error("There was a problem with the fetch operation:", error);
