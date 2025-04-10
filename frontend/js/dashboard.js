@@ -112,10 +112,10 @@ function setupFightButtons() {
     fightButtons.forEach(button => {
         button.addEventListener('click', function() {
             // Prüfe, ob ein Charakter ausgewählt wurde
-            if (!selectedCharacter) {
-                alert('Bitte wähle zuerst einen Charakter aus!');
-                return;
-            }
+            // if (!selectedCharacter) {
+            //     alert('Bitte wähle zuerst einen Charakter aus!');
+            //     return;
+            // }
             
             // Navigiere zur Arena
             window.navigateTo('arena');

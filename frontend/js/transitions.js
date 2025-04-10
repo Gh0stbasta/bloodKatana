@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function showInitialAnimation() {
     const swipeAnimation = document.getElementById('swipeAnimation');
-    const swipeVideo = document.getElementById('swipeVideo');
     
     if (swipeAnimation && swipeVideo) {
         swipeAnimation.style.display = 'flex';
@@ -51,21 +50,6 @@ function showInitialAnimation() {
             }, 500);
         });
         
-        // Video abspielen
-        swipeVideo.play().catch(error => {
-            console.error('Video konnte nicht abgespielt werden:', error);
-            // Fallback, wenn Video nicht abgespielt werden kann
-            swipeAnimation.style.display = 'none';
-            const mainContent = document.querySelector('.main-content') || 
-                               document.querySelector('.dashboard-container') ||
-                               document.querySelector('.login-container') ||
-                               document.querySelector('.arena-container');
-            
-            if (mainContent) {
-                mainContent.classList.add('visible');
-                mainContent.style.animation = 'fadeIn 0.8s ease-out forwards';
-            }
-        });
     } else {
         // Fallback, wenn Animation-Elemente nicht gefunden werden
         const mainContent = document.querySelector('.main-content') || 
@@ -253,12 +237,6 @@ function showBattleResult(isVictory) {
     resultDisplay.appendChild(resultTitle);
     
     if (isVictory) {
-        // Trophäe für Sieg
-        const trophy = document.createElement('img');
-        trophy.src = 'images/trophy.png';
-        trophy.alt = 'Siegestrophäe';
-        trophy.className = 'trophy trophy-raise';
-        resultDisplay.appendChild(trophy);
         
         // Sieger-Text
         const victorText = document.createElement('p');
@@ -269,11 +247,6 @@ function showBattleResult(isVictory) {
         // Sanitäter für Niederlage
         const medic = document.createElement('div');
         medic.className = 'medic medic-enter';
-        
-        const medicImg = document.createElement('img');
-        medicImg.src = 'images/medic.png';
-        medicImg.alt = 'Sanitäter';
-        medic.appendChild(medicImg);
         
         resultDisplay.appendChild(medic);
         
