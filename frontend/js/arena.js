@@ -438,7 +438,6 @@ function endBattle(playerWon) {
 
   // Lokalen Speicher leeren
   localStorage.clear();
-  addLogMessage("Der lokale Speicher wurde geleert.", "system");
 
   // Zeige die Sieges- oder Niederlagen-Animation
   setTimeout(function () {
