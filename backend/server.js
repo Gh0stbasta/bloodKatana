@@ -1,128 +1,57 @@
 const express = require("express");
-const sqlite3 = require("sqlite3");
 const http = require("http");
-const WebSocket = require("ws");
-const cors = require("cors"); // Import the cors package
+const { Server } = require("socket.io");
 
-// Initialize SQLite database
-const db = new sqlite3.Database("./database.db", (err) => {
-  if (err) {
-    console.error("Error opening database:", err.message);
-  } else {
-    console.log("Connected to SQLite database.");
-    db.run(
-      `CREATE TABLE IF NOT EXISTS user (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        passwort TEXT NOT NULL,
-        siege INTEGER NOT NULL,
-        niederlagen INTEGER NOT NULL
-        )`,
-      (err) => {
-        if (err) {
-          console.error("Error creating table:", err.message);
-        } else {
-          console.log("Table 'user' is ready.");
-        }
-      }
-    );
-    db.run(
-      `CREATE TABLE IF NOT EXISTS charakter (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        stärke INTEGER NOT NULL,
-        verteidigung INTEGER NOT NULL,
-        angriff1 TEXT NOT NULL,
-        angriffsschaden1 INTEGER NOT NULL,
-        angriff2 TEXT NOT NULL,
-        angriffsschaden2 INTEGER NOT NULL,
-        angriff3 TEXT NOT NULL,
-        angriffsschaden3 INTEGER NOT NULL,
-        angriff4 TEXT NOT NULL,
-        angriffsschaden4 INTEGER NOT NULL
-        )`,
-      (err) => {
-        if (err) {
-          console.error("Error creating table:", err.message);
-        } else {
-          console.log("Table 'charakter' is ready.");
-        }
-      }
-    );
-  }
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+app.use(express.static("./frontend"));
+
+app.get("/", (req, res) => {
+  res.redirect("/dashboard.html");
 });
 
-const server = express();
-const hauptserver = http.createServer(server);
-const wss = new WebSocket.Server({ server: hauptserver });
+const games = {};
+let roomCounter = 1;
 
-// Use CORS middleware
-server.use(cors()); // Enable CORS for all routes
+io.on("connection", (socket) => {
+  console.log("🔌 A user connected", socket.id);
 
-wss.on("connection", (ws) => {
-  console.log("Neue WebSocket-Verbindung hergestellt.");
+  socket.on("createGame", () => {
+    const roomId = "room" + roomCounter;
+    socket.join(roomId);
+    if (!games[roomId]) games[roomId] = [];
+    games[roomId].push(socket.id);
 
-  ws.on("message", (message) => {
-    console.log("Nachricht empfangen:", message);
-    ws.send(message);
+    if (games[roomId].length === 2) {
+      io.to(roomId).emit("gameCreated", roomId);
+      roomCounter++;
+    }
   });
 
-  ws.on("close", () => {
-    console.log("WebSocket-Verbindung geschlossen.");
+  socket.on("joinGame", (roomId) => {
+    if (!games[roomId]) games[roomId] = [];
+    socket.join(roomId);
+    games[roomId].push(socket.id);
+
+    if (games[roomId].length === 2) {
+      io.to(roomId).emit("startGame", roomId);
+    }
+    console.log(games);
   });
-});
 
-server.use(express.json());
-server.use(express.static("../frontend"));
-
-server.get("/user", (req, res) => {
-  db.all(`SELECT * FROM user`, [], (err, rows) => {
-    if (err) {
-      console.error("Error fetching users:", err.message);
-      res.status(500).send("Internal Server Error");
-    } else {
-      res.json(rows);
+  socket.on("disconnect", () => {
+    for (const roomId in games) {
+      games[roomId] = games[roomId].filter((id) => id !== socket.id);
+      if (games[roomId].length === 0) {
+        delete games[roomId];
+      }
+      console.log(games);
     }
   });
 });
 
-server.get("/charakter", (req, res) => {
-  db.all(`SELECT * FROM charakter`, [], (err, rows) => {
-    if (err) {
-      console.error("Error fetching charakter:", err.message);
-      res.status(500).send("Internal Server Error");
-    } else {
-      res.json(rows);
-    }
-  });
-});
-
-// Endpoint zum Aktualisieren eines Benutzers
-server.put("/user/:id", (req, res) => {
-  const { id } = req.params;
-  const { siege, niederlagen } = req.body;
-
-  if (typeof siege !== "number" || typeof niederlagen !== "number") {
-    return res.status(400).send("Ungültige Eingabedaten");
-  }
-
-  db.run(
-    `UPDATE user SET siege = ?, niederlagen = ? WHERE id = ?`,
-    [siege, niederlagen, id],
-    function (err) {
-      if (err) {
-        console.error("Fehler beim Aktualisieren des Benutzers:", err.message);
-        res.status(500).send("Interner Serverfehler");
-      } else if (this.changes === 0) {
-        res.status(404).send("Benutzer nicht gefunden");
-      } else {
-        res.send("Benutzer erfolgreich aktualisiert");
-      }
-    }
-  );
-});
-
-// Start the server
-hauptserver.listen(3000, () => {
-  console.log(`Server is running on http://localhost:3000`);
+server.listen(3000, () => {
+  console.log("🚀 Server running at http://localhost:3000");
 });

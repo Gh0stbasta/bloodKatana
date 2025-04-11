@@ -25,8 +25,8 @@ const characters = {
     special: "Dämonische Reflexion",
   },
   "Kōgei no Shinobi": {
-    attack: 80,
-    defense: 60,
+    attack: 120,
+    defense: 30,
     special: "Tödliche Präzision",
   },
 };
