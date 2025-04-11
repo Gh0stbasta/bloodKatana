@@ -1,288 +1,192 @@
 /* animations.css */
 /* Enthält alle Animationen und Übergangseffekte für das Samurai-KatanaBlood Frontend */
 
-/* Swipe-Animation */
-.swipe-effect {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.8), rgba(255, 140, 0, 0.8));
-    clip-path: circle(0% at center);
-    z-index: 9999;
-    animation: none;
-    pointer-events: none;
-}
-
 /* Animation für Seitenübergänge */
 @keyframes swipeIn {
-    0% {
-        clip-path: circle(0% at center);
-    }
-    100% {
-        clip-path: circle(150% at center);
-    }
+  0% {
+    clip-path: circle(0% at center);
+  }
+  100% {
+    clip-path: circle(150% at center);
+  }
 }
 
 @keyframes swipeOut {
-    0% {
-        clip-path: circle(150% at center);
-    }
-    100% {
-        clip-path: circle(0% at center);
-    }
+  0% {
+    clip-path: circle(150% at center);
+  }
+  100% {
+    clip-path: circle(0% at center);
+  }
 }
 
 /* Fade-In-Animation für Container */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Pulsieren für Buttons und interaktive Elemente */
 @keyframes pulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
-    }
-    70% {
-        transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
-    }
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+  }
 }
 
 /* Kampfanimationen */
 @keyframes katanaSlash {
-    0% {
-        box-shadow: 0 0 30px 10px rgba(152, 63, 216, 0.7);
-        transform: scale(0) rotate(0deg);
-        opacity: 0;
-    }
-    20% {
-        box-shadow: 0 0 30px 10px rgba(152, 63, 216, 0.7);
-        transform: scale(1) rotate(0deg);
-        opacity: 1;
-    }
-    80% {
-        box-shadow: 0 0 30px 10px rgba(152, 63, 216, 0.7);
-        transform: scale(1.5) rotate(180deg);
-        opacity: 1;
-    }
-    100% {
-        box-shadow: 0 0 30px 10px rgba(152, 63, 216, 0.7);
-        transform: scale(2) rotate(360deg);
-        opacity: 0;
-    }
+  0% {
+    box-shadow: 0 0 30px 10px rgba(152, 63, 216, 0.7);
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    box-shadow: 0 0 30px 10px rgba(152, 63, 216, 0.7);
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  80% {
+    box-shadow: 0 0 30px 10px rgba(152, 63, 216, 0.7);
+    transform: scale(1.5) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 30px 10px rgba(152, 63, 216, 0.7);
+    transform: scale(2) rotate(360deg);
+    opacity: 0;
+  }
 }
 
 @keyframes shadowAttack {
-    0% {
-        box-shadow: 0 0 30px 10px rgba(20, 18, 22, 0.7);
-        filter: blur(0);
-        opacity: 1;
-    }
-    50% {
-        box-shadow: 0 0 30px 10px rgba(20, 18, 22, 0.7);
-        filter: blur(10px);
-        opacity: 0.5;
-        transform: translateX(-20px);
-    }
-    51% {
-        box-shadow: 0 0 30px 10px rgba(20, 18, 22, 0.7);
-        transform: translateX(20px);
-    }
-    100% {
-        box-shadow: 0 0 30px 10px rgba(20, 18, 22, 0.7);
-        filter: blur(0);
-        opacity: 1;
-        transform: translateX(0);
-    }
+  0% {
+    box-shadow: 0 0 30px 10px rgba(20, 18, 22, 0.7);
+    filter: blur(0);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 30px 10px rgba(20, 18, 22, 0.7);
+    filter: blur(10px);
+    opacity: 0.5;
+    transform: translateX(-20px);
+  }
+  51% {
+    box-shadow: 0 0 30px 10px rgba(20, 18, 22, 0.7);
+    transform: translateX(20px);
+  }
+  100% {
+    box-shadow: 0 0 30px 10px rgba(20, 18, 22, 0.7);
+    filter: blur(0);
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes counterStance {
-    0% {
-        box-shadow: 0 0 0 0 rgba(74, 216, 107, 0.7);
-    }
-    50% {
-        box-shadow: 0 0 30px 10px rgba(74, 216, 107, 0.7);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(74, 216, 107, 0.7);
-    }
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 216, 107, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 30px 10px rgba(74, 216, 107, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 216, 107, 0.7);
+  }
 }
 
 @keyframes deathBlow {
-    0% {
-        box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
-        filter: brightness(1);
-        transform: scale(1);
-    }
-    10% {
-        box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
-        filter: brightness(2);
-        transform: scale(1.1);
-    }
-    20% {
-        box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
-        filter: brightness(1);
-        transform: scale(1);
-    }
-    30% {
-        box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
-        filter: brightness(2);
-        transform: scale(1.1);
-    }
-    40% {
-        box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
-        filter: brightness(1);
-        transform: scale(1);
-    }
-    50% {
-        box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
-        filter: brightness(3);
-        transform: scale(1.3);
-    }
-    100% {
-        box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
-        filter: brightness(1);
-        transform: scale(1);
-    }
-}
-
-/* Sieges- und Niederlagen-Animationen */
-@keyframes trophyRaise {
-    0% {
-        transform: translateY(50px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(-30px);
-        opacity: 1;
-    }
-}
-
-@keyframes medicEnter {
-    0% {
-        transform: translateX(-100px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Gesundheitszustands-Animationen */
-@keyframes healthPulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes injuredShake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    10%, 30%, 50%, 70%, 90% {
-        transform: translateX(-2px);
-    }
-    20%, 40%, 60%, 80% {
-        transform: translateX(2px);
-    }
+  0% {
+    box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  10% {
+    box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
+    filter: brightness(2);
+    transform: scale(1.1);
+  }
+  20% {
+    box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  30% {
+    box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
+    filter: brightness(2);
+    transform: scale(1.1);
+  }
+  40% {
+    box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
+    filter: brightness(3);
+    transform: scale(1.3);
+  }
+  100% {
+    box-shadow: 0 0 30px 10px rgba(242, 230, 2, 0.7);
+    filter: brightness(1);
+    transform: scale(1);
+  }
 }
 
 /* Anwendung der Animationen */
 .visible {
-    animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 .btn:hover {
-    animation: pulse 1.5s infinite;
+  animation: pulse 1.5s infinite;
 }
 
 .attack-animation.katana-slash {
-    animation: katanaSlash 0.8s ease-out forwards;
+  animation: katanaSlash 0.8s ease-out forwards;
 }
 
 .attack-animation.shadow-attack {
-    animation: shadowAttack 0.8s ease-out forwards;
+  animation: shadowAttack 0.8s ease-out forwards;
 }
 
 .attack-animation.counter-stance {
-    animation: counterStance 1s ease-out forwards;
+  animation: counterStance 1s ease-out forwards;
 }
 
 .attack-animation.death-blow {
-    animation: deathBlow 1.2s ease-out forwards;
-}
-
-.trophy.trophy-raise {
-    animation: trophyRaise 1.5s ease-out forwards;
-}
-
-.medic.medic-enter {
-    animation: medicEnter 1.5s ease-out forwards;
-}
-
-.health-normal:hover {
-    animation: healthPulse 1.5s infinite;
-}
-
-.health-injured {
-    animation: injuredShake 0.5s infinite;
+  animation: deathBlow 1.2s ease-out forwards;
 }
 
 /* Übergangseffekte zwischen Seiten */
 .page-transition {
-    transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .page-exit {
-    opacity: 0;
-    transform: translateX(-20px);
+  opacity: 0;
+  transform: translateX(-20px);
 }
 
 .page-enter {
-    opacity: 0;
-    transform: translateX(20px);
+  opacity: 0;
+  transform: translateX(20px);
 }
 
 .page-active {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Responsive Animationen */
-@media (max-width: 768px) {
-    .swipe-effect {
-        animation-duration: 0.3s;
-    }
-    
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+  opacity: 1;
+  transform: translateX(0);
 }
