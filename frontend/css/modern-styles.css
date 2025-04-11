@@ -31,6 +31,16 @@ body {
   position: relative;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
 h1,
 h2,
 h3,

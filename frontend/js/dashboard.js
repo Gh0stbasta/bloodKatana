@@ -15,7 +15,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (savedCharacter) {
         selectCharacter(savedCharacter);
     }
-    
+
+    // Event-Listener für den Button "btn-join-match"
+    const joinMatchButton = document.getElementById('btn-join-match');
+    if (joinMatchButton) {
+        joinMatchButton.addEventListener('click', function() {
+            // Deaktiviere den Button
+            this.disabled = true;
+            // Ändere den Text des Buttons
+            this.textContent = 'Warte auf Gegner...';
+            // Füge die Klasse "pulse" hinzu
+            this.classList.add('pulse');
+        });
+    }
     // Event-Listener für Charakterkarten
     setupCharacterSelection();
     

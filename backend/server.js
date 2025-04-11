@@ -16,7 +16,7 @@ const games = {};
 let roomCounter = 1;
 
 io.on("connection", (socket) => {
-  console.log("🔌 A user connected", socket.id);
+  console.log("User connected", socket.id);
 
   socket.on("createGame", () => {
     const roomId = "room" + roomCounter;
