@@ -1,8 +1,3 @@
-/**
- * arena.js
- * Enthält die Kampflogik und Steuerung für die Arena-Seite
- */
-
 // Globale Variablen
 let playerHealth = 100;
 let enemyHealth = 100;
@@ -13,6 +8,13 @@ let selectedCharacter = "";
 let enemyCharacter = "";
 let selectedCharacterID = 0;
 let enemyCharacterID = 0;
+
+// Connecting to websocket in defined room via url
+const socket = io();
+const params = new URLSearchParams(window.location.search);
+const room = params.get("room");
+
+socket.emit("joinGame", room);
 
 // Verfügbare Charaktere mit ihren Eigenschaften
 const characters = {
@@ -31,31 +33,29 @@ const characters = {
   },
 };
 
-/**
- * Initialisiert die Arena beim Laden der Seite
- */
 document.addEventListener("DOMContentLoaded", function () {
   // Lade den ausgewählten Charakter aus dem lokalen Speicher
   selectedCharacter =
     localStorage.getItem("selectedCharacter") || "Sōgō no Shisha";
 
-    if (selectedCharacter === "Sōgō no Shisha") {
-      selectedCharacterID = 1;
-    } else if (selectedCharacter === "Ayatsurishi") {
-      selectedCharacterID = 2;
-    } else if (selectedCharacter === "Bedy Yamiko") {
-      selectedCharacterID = 3;
-    } else if (selectedCharacter === "Utsushi no Oni") {
-      selectedCharacterID = 4;
-    } else if (selectedCharacter === "Kōgei no Shinobi") {
-      selectedCharacterID = 5;
-    }
+  if (selectedCharacter === "Sōgō no Shisha") {
+    selectedCharacterID = 1;
+  } else if (selectedCharacter === "Ayatsurishi") {
+    selectedCharacterID = 2;
+  } else if (selectedCharacter === "Bedy Yamiko") {
+    selectedCharacterID = 3;
+  } else if (selectedCharacter === "Utsushi no Oni") {
+    selectedCharacterID = 4;
+  } else if (selectedCharacter === "Kōgei no Shinobi") {
+    selectedCharacterID = 5;
+  }
 
   // Wähle einen zufälligen Gegner
   const availableEnemies = Object.keys(characters).filter(
     (char) => char !== selectedCharacter
   );
-  enemyCharacter = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
+  enemyCharacter =
+    availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
   if (enemyCharacter === "Sōgō no Shisha") {
     enemyCharacterID = 1;
   } else if (enemyCharacter === "Ayatsurishi") {
@@ -93,9 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
   startBattle();
 });
 
-/**
- * Richtet die Arena mit den Kämpfern ein
- */
 function setupArena() {
   // Spieler-Kämpfer einrichten
   const playerFighter = document.getElementById("playerFighter");
@@ -145,9 +142,6 @@ function setupArena() {
   updateHealthBars();
 }
 
-/**
- * Aktualisiert die Gesundheitsbalken beider Kämpfer
- */
 function updateHealthBars() {
   // Spieler-Gesundheitsbalken
   const playerHealthBar = document.getElementById("playerHP");
@@ -182,9 +176,6 @@ function updateHealthBars() {
   }
 }
 
-/**
- * Startet einen neuen Kampf
- */
 function startBattle() {
   // Kampfvariablen zurücksetzen
   playerHealth = 100;
@@ -212,10 +203,6 @@ function startBattle() {
   enableAttackButtons(true);
 }
 
-/**
- * Führt einen Angriff aus
- * @param {string} attackType - Art des Angriffs ('katana', 'schatten', 'konter', 'tod')
- */
 function performAttack(attackType) {
   if (!battleInProgress || !playerTurn) return;
 
@@ -261,9 +248,6 @@ function performAttack(attackType) {
   }, 1000);
 }
 
-/**
- * Führt den Angriff des Gegners aus
- */
 function enemyAttack() {
   if (!battleInProgress) return;
 
@@ -309,12 +293,6 @@ function enemyAttack() {
   }, 1000);
 }
 
-/**
- * Berechnet den Schaden eines Angriffs
- * @param {string} attackType - Art des Angriffs ('katana', 'schatten', 'konter', 'tod')
- * @param {boolean} isPlayer - true, wenn der Spieler angreift, false für Gegner
- * @returns {number} - Berechneter Schaden
- */
 function calculateDamage(attackType, isPlayer) {
   const attacker = isPlayer ? selectedCharacter : enemyCharacter;
   const defender = isPlayer ? enemyCharacter : selectedCharacter;
@@ -363,11 +341,6 @@ function calculateDamage(attackType, isPlayer) {
   return damage;
 }
 
-/**
- * Gibt den Namen eines Angriffs zurück
- * @param {string} attackType - Art des Angriffs ('katana', 'schatten', 'konter', 'tod')
- * @returns {string} - Name des Angriffs
- */
 function getAttackName(attackType) {
   switch (attackType) {
     case "katana":
@@ -383,10 +356,6 @@ function getAttackName(attackType) {
   }
 }
 
-/**
- * Aktiviert oder deaktiviert die Angriffstasten
- * @param {boolean} enable - true zum Aktivieren, false zum Deaktivieren
- */
 function enableAttackButtons(enable) {
   const buttons = document.querySelectorAll(".attack-button");
   buttons.forEach((button) => {
@@ -399,11 +368,6 @@ function enableAttackButtons(enable) {
   });
 }
 
-/**
- * Fügt eine Nachricht zum Kampflog hinzu
- * @param {string} message - Nachrichtentext
- * @param {string} type - Nachrichtentyp ('player', 'enemy', 'system')
- */
 function addLogMessage(message, type) {
   const logMessages = document.getElementById("logMessages");
   if (!logMessages) return;
@@ -419,10 +383,6 @@ function addLogMessage(message, type) {
   logMessages.scrollTop = 0;
 }
 
-/**
- * Beendet den Kampf
- * @param {boolean} playerWon - true, wenn der Spieler gewonnen hat, false wenn er verloren hat
- */
 function endBattle(playerWon) {
   battleInProgress = false;
 
@@ -445,11 +405,6 @@ function endBattle(playerWon) {
   }, 2000);
 }
 
-/**
- * Spielt eine Angriffsanimation ab
- * @param {string} attackType - Art des Angriffs ('katana', 'schatten', 'konter', 'tod')
- * @param {string} targetId - ID des Ziel-Elements
- */
 function playAttackAnimation(attackType, targetId) {
   const target = document.getElementById(targetId);
   if (!target) return;
@@ -484,12 +439,3 @@ function playAttackAnimation(attackType, targetId) {
     animation.remove();
   }, 1000);
 }
-
-/**
- * Zeigt die Sieges- oder Niederlagen-Animation
- * @param {boolean} isVictory - true für Sieg, false für Niederlage
- */
-// function showBattleResult(isVictory) {
-//     // Erstelle das Ergebnis-Display
-//     const resultDisplay = document.createElement('div');
-//     resultDisplay.className = `result-display ${is<response clipped><NOTE>To save on context only part of this file has been shown to you. You should retry this tool after you have searched inside the file with `grep -n` in order to find the line numbers of what you are looking for.</NOTE>

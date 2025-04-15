@@ -20,6 +20,7 @@ io.on("connection", (socket) => {
 
   socket.on("createGame", () => {
     const roomId = "room" + roomCounter;
+    console.log(`${socket.id} requested a new game in room ${roomId}`);
     socket.join(roomId);
     if (!games[roomId]) games[roomId] = [];
     games[roomId].push(socket.id);
@@ -38,7 +39,7 @@ io.on("connection", (socket) => {
     if (games[roomId].length === 2) {
       io.to(roomId).emit("startGame", roomId);
     }
-    console.log(games);
+    console.log(`${socket.id} entered ${roomId}`);
   });
 
   socket.on("disconnect", () => {
@@ -47,7 +48,6 @@ io.on("connection", (socket) => {
       if (games[roomId].length === 0) {
         delete games[roomId];
       }
-      console.log(games);
     }
   });
 });

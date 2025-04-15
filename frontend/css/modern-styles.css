@@ -64,6 +64,10 @@ h6 {
   margin-bottom: 2rem;
 }
 
+.disabled {
+  background-color: grey;
+}
+
 /* Buttons */
 .btn {
   display: inline-block;
