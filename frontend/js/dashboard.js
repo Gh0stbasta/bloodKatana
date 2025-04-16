@@ -2,6 +2,35 @@
 let selectedCharacter = "";
 const socket = io();
 const joinMatchButton = document.getElementById("btn-join-match");
+const playerNameInput = document.getElementById("player-name");
+let playerName = "";
+
+if (playerNameInput) {
+  const characterGrid = document.getElementById("character-grid");
+
+  playerNameInput.addEventListener("input", function () {
+    playerName = this.value;
+
+    if (characterGrid) {
+      if (playerName.trim() === "") {
+        characterGrid.classList.add("disabled-grid");
+        characterGrid.style.pointerEvents = "none";
+        playerNameInput.classList.add("pulse");
+      } else {
+        characterGrid.classList.remove("disabled-grid");
+        characterGrid.style.pointerEvents = "auto";
+        playerNameInput.classList.remove("pulse");
+      }
+    }
+  });
+
+  // Initial state check
+  if (characterGrid && playerNameInput.value.trim() === "") {
+    characterGrid.classList.add("disabled-grid");
+    characterGrid.style.pointerEvents = "none";
+    playerNameInput.classList.add("pulse");
+  }
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   // Lade den ausgewählten Charakter aus dem lokalen Speicher, falls vorhanden
@@ -56,6 +85,7 @@ function selectCharacter(characterName) {
   // Speichere den ausgewählten Charakter
   selectedCharacter = characterName;
   localStorage.setItem("selectedCharacter", characterName);
+  localStorage.setItem("playerName", playerName);
 
   // Visuelles Feedback für die Auswahl
   const characterCards = document.querySelectorAll(".character-card");

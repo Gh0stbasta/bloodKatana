@@ -31,15 +31,77 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("joinGame", (roomId) => {
+  // set up game if 2 players join one room
+  socket.on("joinGame", ({ roomId, playerName, chosenCharacterId }) => {
     if (!games[roomId]) games[roomId] = [];
     socket.join(roomId);
-    games[roomId].push(socket.id);
+
+    const characters = [
+      {
+        id: 1,
+        name: "Sōgō no Shisha",
+        attack: 30,
+        defense: 120,
+        special: "Präzisionsschlag",
+      },
+      {
+        id: 2,
+        name: "Ayatsurishi",
+        attack: 70,
+        defense: 70,
+        special: "Schattendoppelgänger",
+      },
+      {
+        id: 3,
+        name: "Bedy Yamiko",
+        attack: 90,
+        defense: 50,
+        special: "Drachenklaue",
+      },
+      {
+        id: 4,
+        name: "Utsushi no Oni",
+        attack: 50,
+        defense: 90,
+        special: "Dämonische Reflexion",
+      },
+      {
+        id: 5,
+        name: "Kōgei no Shinobi",
+        attack: 120,
+        defense: 30,
+        special: "Tödliche Präzision",
+      },
+    ];
+
+    const chosenCharacter = characters.findIndex(
+      (character) => character.id === chosenCharacterId
+    );
+
+    games[roomId].push({ id: socket.id, playerName, chosenCharacter });
 
     if (games[roomId].length === 2) {
-      io.to(roomId).emit("startGame", roomId);
+      // set up initial values like player names, health status, possible attacks, and player turn based on random dice roll
+      // Verfügbare Charaktere mit ihren Eigenschaften
+
+      const gameState = {
+        roomId: roomId,
+        playerHealth: 100,
+        enemyHealth: 100,
+        maxHealth: 100,
+        battleInProgress: false,
+        playerTurn: games[roomId][0].id === socket.id, // true for the first player, false for the second
+        playerOne: games[roomId][0].playerName,
+        playerTwo: games[roomId][1].playerName,
+        playerOneCharacter: games[roomId][0].chosenCharacter,
+        playerTwoCharacter: games[roomId][1].chosenCharacter,
+      };
+
+      io.to(roomId).emit("startGame", { roomId, gameState });
     }
-    console.log(`${socket.id} entered ${roomId}`);
+    console.log(
+      `${playerName} (${socket.id}) entered ${roomId} with character ${chosenCharacter}`
+    );
   });
 
   socket.on("disconnect", () => {
@@ -55,3 +117,5 @@ io.on("connection", (socket) => {
 server.listen(3000, () => {
   console.log("🚀 Server running at http://localhost:3000");
 });
+
+// check for win loose condition
