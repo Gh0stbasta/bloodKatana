@@ -1,6 +1,6 @@
-Jetzt muss das arena setup mit dem gamestate aufgebaut werden --> der Socket übermittelt jetzt die richtigen infos
-
-dann müssen die socket onPlayerTurn initialisiert werden
-hier muss dann zeitgleich ein arenaupdate stattfinden
-
-mit jedem turn muss aber serverseitig auch die win condition abgefragt werden
+- als nächstes muss der dmg auf dem server errechnet werden
+- player turn wechselt
+- in der gamestate db speichern
+- an alle sockets raus emitten
+- clients UI updaten
+- während des updates win condition checken

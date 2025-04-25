@@ -13,13 +13,47 @@ app.get("/", (req, res) => {
 });
 
 const games = {};
-let roomCounter = 1;
+let gameStateDb = [];
+let roomCounter = 0;
+
+const characters = [
+  {
+    id: 1,
+    name: "Sōgō no Shisha",
+    attack: 30,
+    defense: 120,
+  },
+  {
+    id: 2,
+    name: "Ayatsurishi",
+    attack: 70,
+    defense: 70,
+  },
+  {
+    id: 3,
+    name: "Bedy Yamiko",
+    attack: 90,
+    defense: 50,
+  },
+  {
+    id: 4,
+    name: "Utsushi no Oni",
+    attack: 50,
+    defense: 90,
+  },
+  {
+    id: 5,
+    name: "Kōgei no Shinobi",
+    attack: 120,
+    defense: 30,
+  },
+];
 
 io.on("connection", (socket) => {
   console.log("User connected", socket.id);
 
   socket.on("createGame", () => {
-    const roomId = "room" + roomCounter;
+    const roomId = roomCounter;
     console.log(`${socket.id} requested a new game in room ${roomId}`);
     socket.join(roomId);
     if (!games[roomId]) games[roomId] = [];
@@ -31,76 +65,43 @@ io.on("connection", (socket) => {
     }
   });
 
-  // set up game if 2 players join one room
   socket.on("joinGame", ({ roomId, playerName, chosenCharacterId }) => {
     console.log(playerName, chosenCharacterId);
     if (!games[roomId]) games[roomId] = [];
     socket.join(roomId);
 
-    const characters = [
-      {
-        id: 1,
-        name: "Sōgō no Shisha",
-        attack: 30,
-        defense: 120,
-        special: "Präzisionsschlag",
-      },
-      {
-        id: 2,
-        name: "Ayatsurishi",
-        attack: 70,
-        defense: 70,
-        special: "Schattendoppelgänger",
-      },
-      {
-        id: 3,
-        name: "Bedy Yamiko",
-        attack: 90,
-        defense: 50,
-        special: "Drachenklaue",
-      },
-      {
-        id: 4,
-        name: "Utsushi no Oni",
-        attack: 50,
-        defense: 90,
-        special: "Dämonische Reflexion",
-      },
-      {
-        id: 5,
-        name: "Kōgei no Shinobi",
-        attack: 120,
-        defense: 30,
-        special: "Tödliche Präzision",
-      },
-    ];
-
-    const chosenCharacter = characters[chosenCharacterId];
+    const chosenCharacter = characters[chosenCharacterId - 1];
 
     games[roomId].push({ id: socket.id, playerName, chosenCharacter });
 
     if (games[roomId].length === 2) {
-      // set up initial values like player names, health status, possible attacks, and player turn based on random dice roll
-      // Verfügbare Charaktere mit ihren Eigenschaften
-
       const gameState = {
         roomId: roomId,
         playerHealth: 100,
         enemyHealth: 100,
         maxHealth: 100,
         battleInProgress: false,
-        playerTurn: games[roomId][0].playerName, // true for the first player, false for the second
-        playerOne: games[roomId][0].playerName,
-        playerTwo: games[roomId][1].playerName,
-        playerOneCharacter: games[roomId][0].chosenCharacter,
-        playerTwoCharacter: games[roomId][1].chosenCharacter,
+        playerTurn: games[roomId][0].playerName,
+        player: games[roomId][0].playerName,
+        enemy: games[roomId][1].playerName,
+        playerCharacter: games[roomId][0].chosenCharacter,
+        enemyCharacter: games[roomId][1].chosenCharacter,
       };
+      gameStateDb.push(gameState);
 
       io.to(roomId).emit("startGame", { roomId, gameState });
     }
     console.log(
       `${playerName} (${socket.id}) entered ${roomId} with character ${chosenCharacter}`
     );
+    console.log(gameStateDb);
+  });
+
+  socket.on("attack", ({ roomId, damage }) => {
+    const game = games[roomId];
+    if (!game || game.length < 2) return;
+
+    io.to(roomId).emit("updateGameState", gameState);
   });
 
   socket.on("disconnect", () => {
