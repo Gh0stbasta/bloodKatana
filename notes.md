@@ -1,10 +1,4 @@
-playername in dashborad initialisiert
-der muss noch im localstorage gespeichert werden
-damit er nachher in arena.js rausgeholt und zum connecten für den room verwendet werden kann.
-zum connecten muss roomnumber, playername und chosencharacer (was jetzt ne nummber ist) gesendet werden.
-
-dann kann man mit socket emit startgame anfangen
-wo zeitgleich das arena setup stattfinden muss
+Jetzt muss das arena setup mit dem gamestate aufgebaut werden --> der Socket übermittelt jetzt die richtigen infos
 
 dann müssen die socket onPlayerTurn initialisiert werden
 hier muss dann zeitgleich ein arenaupdate stattfinden

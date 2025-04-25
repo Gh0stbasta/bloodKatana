@@ -33,6 +33,7 @@ io.on("connection", (socket) => {
 
   // set up game if 2 players join one room
   socket.on("joinGame", ({ roomId, playerName, chosenCharacterId }) => {
+    console.log(playerName, chosenCharacterId);
     if (!games[roomId]) games[roomId] = [];
     socket.join(roomId);
 
@@ -74,9 +75,7 @@ io.on("connection", (socket) => {
       },
     ];
 
-    const chosenCharacter = characters.findIndex(
-      (character) => character.id === chosenCharacterId
-    );
+    const chosenCharacter = characters[chosenCharacterId];
 
     games[roomId].push({ id: socket.id, playerName, chosenCharacter });
 
@@ -90,7 +89,7 @@ io.on("connection", (socket) => {
         enemyHealth: 100,
         maxHealth: 100,
         battleInProgress: false,
-        playerTurn: games[roomId][0].id === socket.id, // true for the first player, false for the second
+        playerTurn: games[roomId][0].playerName, // true for the first player, false for the second
         playerOne: games[roomId][0].playerName,
         playerTwo: games[roomId][1].playerName,
         playerOneCharacter: games[roomId][0].chosenCharacter,

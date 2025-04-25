@@ -3,11 +3,10 @@ let selectedCharacter = "";
 const socket = io();
 const joinMatchButton = document.getElementById("btn-join-match");
 const playerNameInput = document.getElementById("player-name");
+const characterGrid = document.getElementById("character-grid");
 let playerName = "";
 
 if (playerNameInput) {
-  const characterGrid = document.getElementById("character-grid");
-
   playerNameInput.addEventListener("input", function () {
     playerName = this.value;
 
@@ -50,6 +49,16 @@ document.addEventListener("DOMContentLoaded", function () {
       this.textContent = "Warte auf Gegner...";
       // Füge die Klasse "pulse" hinzu
       this.classList.add("pulse");
+      // Deaktiviere das Eingabefeld für den Spielernamen
+      if (playerNameInput) {
+        playerNameInput.disabled = true;
+        playerNameInput.classList.add("disabled-grid");
+        localStorage.setItem("playerName", playerNameInput.value);
+      }
+      if (characterGrid) {
+        characterGrid.classList.add("disabled-grid");
+        characterGrid.style.pointerEvents = "none";
+      }
     });
   }
   // Event-Listener für Charakterkarten
