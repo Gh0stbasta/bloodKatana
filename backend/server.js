@@ -97,11 +97,75 @@ io.on("connection", (socket) => {
     console.log(gameStateDb);
   });
 
-  socket.on("attack", ({ roomId, damage }) => {
+  socket.on("attack", ({ roomId, playerName, attackType }) => {
     const game = games[roomId];
     if (!game || game.length < 2) return;
 
-    io.to(roomId).emit("updateGameState", gameState);
+    let attacker = "";
+    let defender = "";
+    let message = "";
+
+    if (gameStateDb[roomId].player === playerName) {
+      attacker = gameStateDb[roomId].playerCharacter.id - 1;
+      defender = gameStateDb[roomId].enemyCharacter.id - 1;
+    } else {
+      defender = gameStateDb[roomId].playerCharacter.id - 1;
+      attacker = gameStateDb[roomId].enemyCharacter.id - 1;
+    }
+
+    // Basis-Angriffswert und Verteidigungswert
+    const attackValue = characters[attacker].attack;
+    const defenseValue = characters[defender].defense;
+
+    // Basis-Schaden
+    let damage = attackValue * (Math.random() * 0.4 + 0.8); // 80-120% des Angriffswerts
+
+    // Modifikatoren basierend auf Angriffstyp
+    switch (attackType) {
+      case "katana":
+        // Normaler Angriff, keine Modifikation
+        break;
+      case "schatten":
+        // Chance auf kritischen Treffer
+        if (Math.random() < 0.3) {
+          damage *= 1.5;
+          message = "Kritischer Treffer!", "system";
+        }
+        break;
+      case "konter":
+        // Reduzierter Schaden, aber erhöht die Verteidigung für den nächsten Angriff
+        damage *= 0.7;
+        break;
+      case "tod":
+        // Hoher Schaden, aber nur 50% Trefferchance
+        if (Math.random() < 0.5) {
+          damage *= 2;
+          message = "Tödlicher Treffer!", "system";
+        } else {
+          damage = 0;
+          message = "Der Angriff verfehlt sein Ziel!", "system";
+        }
+        break;
+    }
+
+    // Verteidigung berücksichtigen
+    damage = Math.max(1, damage - defenseValue * 0.5);
+
+    // Zufälligkeit hinzufügen
+    damage = Math.floor(damage * (Math.random() * 0.2 + 0.9)); // 90-110% Zufälligkeit
+
+    if (gameStateDb[roomId].player === playerName) {
+      gameStateDb[roomId].enemyHealth -= damage;
+      gameStateDb[roomId].playerTurn = gameStateDb[roomId].enemy;
+    } else {
+      gameStateDb[roomId].playerHealth -= damage;
+      gameStateDb[roomId].playerTurn = gameStateDb[roomId].player;
+    }
+
+    const gameState = gameStateDb[roomId]
+    const animationTarget = defender + 1
+
+    io.to(roomId).emit("updateGameState", ({ gameState, message, attackType, animationTarget }));
   });
 
   socket.on("disconnect", () => {
@@ -117,5 +181,3 @@ io.on("connection", (socket) => {
 server.listen(3000, () => {
   console.log("🚀 Server running at http://localhost:3000");
 });
-
-// check for win loose condition

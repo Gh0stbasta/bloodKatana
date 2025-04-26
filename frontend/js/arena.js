@@ -27,10 +27,9 @@ document.querySelectorAll(".attack-button").forEach((button) => {
 const backButton = document.getElementById("backToDashboard");
 if (backButton) {
   backButton.addEventListener("click", function () {
-    window.navigateTo("dashboard");
+    window.location.href = "dashboard.html";
   });
 }
-
 
 function setupArena(gamestate) {
   // Spieler-Kämpfer einrichten
@@ -109,34 +108,7 @@ function performAttack(attackType) {
     playerName: playerName,
     attackType: attackType,
   });
-
-  // Play attack animation
-  playAttackAnimation(attackType, "enemyFighter");
-
-  // Add log message for the attack
-  if (playerName === clientGamestate.player) {
-    addLogMessage(
-      `${clientGamestate.playerCharacter.name} führt ${getAttackName(attackType)} aus!`,
-      "player"
-    );
-  } else {
-    addLogMessage(
-      `${clientGamestate.enemyCharacter.name} führt ${getAttackName(
-        attackType
-      )} aus!`,
-      "player"
-    );
-  }
 }
-
-socket.emit("joinGame", setupPlayerInRoom);
-
-socket.on("startGame", ({ roomId, gameState }) => {
-  clientGamestate = gameState;
-  console.log(clientGamestate);
-  setupArena(gameState);
-  startBattle(gameState);
-});
 
 function enableAttackButtons(enable) {
   const buttons = document.querySelectorAll(".attack-button");
@@ -150,7 +122,7 @@ function enableAttackButtons(enable) {
   });
 }
 
-function updateHealthBars() {
+function updateHealthBars(playerHealth, enemyHealth) {
   // Spieler-Gesundheitsbalken
   const playerHealthBar = document.getElementById("playerHP");
   if (playerHealthBar) {
@@ -248,3 +220,122 @@ function playAttackAnimation(attackType, targetId) {
     animation.remove();
   }, 1000);
 }
+
+function endBattle(playerWon) {
+  // Kampfende-Nachricht
+  if (playerWon) {
+    if (playerName === clientGamestate.player) {
+      addLogMessage(
+        `Du hast ${clientGamestate.enemyCharacter.name} besiegt!`,
+        "system"
+      );
+    } else {
+      addLogMessage(
+        `Du hast ${clientGamestate.playerCharacter.name} besiegt!`,
+        "system"
+      );
+    }
+  } else {
+    if (playerName === clientGamestate.player) {
+      addLogMessage(
+        `Du wurdest von ${clientGamestate.enemyCharacter.name} besiegt!`,
+        "system"
+      );
+    } else {
+      addLogMessage(
+        `Du wurdest von ${clientGamestate.playerCharacter.name} besiegt!`,
+        "system"
+      );
+    }
+  }
+
+  // Deaktiviere die Angriffstasten
+  enableAttackButtons(false);
+
+  // Lokalen Speicher leeren
+  localStorage.clear();
+
+  // Zeige die Sieges- oder Niederlagen-Animation
+  setTimeout(function () {
+    showBattleResult(playerWon);
+  }, 2000);
+}
+
+socket.emit("joinGame", setupPlayerInRoom);
+
+socket.on("startGame", ({ roomId, gameState }) => {
+  clientGamestate = gameState;
+  console.log(clientGamestate);
+  setupArena(gameState);
+  startBattle(gameState);
+});
+
+socket.on(
+  "updateGameState",
+  ({ gameState, message, attackType, animationTarget }) => {
+    clientGamestate = gameState;
+    console.log(gameState);
+
+    // Play attack animation
+    if (animationTarget === clientGamestate.playerCharacter.id) {
+      playAttackAnimation(attackType, "playerFighter");
+    } else {
+      playAttackAnimation(attackType, "enemyFighter");
+    }
+
+    // Add log message for the attack
+    if (animationTarget !== clientGamestate.playerCharacter.id) {
+      addLogMessage(
+        `${clientGamestate.playerCharacter.name} führt ${getAttackName(
+          attackType
+        )} aus!`,
+        "player"
+      );
+    } else {
+      addLogMessage(
+        `${clientGamestate.enemyCharacter.name} führt ${getAttackName(
+          attackType
+        )} aus!`,
+        "player"
+      );
+    }
+
+    // Add log message if provided
+    if (message) {
+      addLogMessage(message, "system");
+    }
+
+    // Update health bars
+    const { playerHealth, enemyHealth } = clientGamestate;
+    updateHealthBars(playerHealth, enemyHealth);
+
+    // Check if the game is over
+    // Prüfen, ob der Gegner besiegt wurde
+    if (enemyHealth <= 0) {
+      if (clientGamestate.player === playerName) {
+        endBattle(true);
+      } else {
+        endBattle(false);
+      }
+      return;
+    }
+
+    if (playerHealth <= 0) {
+      if (clientGamestate.player === playerName) {
+        endBattle(false);
+      } else {
+        endBattle(true);
+      }
+      return;
+    }
+
+    // Update turn information
+    if (clientGamestate.playerTurn === playerName) {
+      addLogMessage("Du bist am Zug. Wähle deinen Angriff!", "system");
+      enableAttackButtons(true);
+    } else {
+      addLogMessage("Der Gegner ist am Zug. Bitte warten...", "system");
+      enableAttackButtons(false);
+    }
+  }
+);
