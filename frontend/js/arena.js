@@ -33,6 +33,13 @@ if (backButton) {
 
 function setupArena(gamestate) {
   // Spieler-Kämpfer einrichten
+  const arenaRow = document.getElementById("arena-row");
+
+  if (playerName !== gamestate.player) {
+    arenaRow.style.display = "flex";
+    arenaRow.style.flexDirection = "row-reverse";
+  }
+
   const playerFighter = document.getElementById("playerFighter");
   if (playerFighter) {
     // Bild des ausgewählten Charakters laden
