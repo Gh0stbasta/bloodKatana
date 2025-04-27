@@ -21,7 +21,7 @@ const characters = [
     id: 1,
     name: "Sōgō no Shisha",
     attack: 30,
-    defense: 120,
+    defense: 110,
   },
   {
     id: 2,
@@ -45,7 +45,7 @@ const characters = [
     id: 5,
     name: "Kōgei no Shinobi",
     attack: 120,
-    defense: 30,
+    defense: 20,
   },
 ];
 
@@ -129,7 +129,7 @@ io.on("connection", (socket) => {
         // Chance auf kritischen Treffer
         if (Math.random() < 0.3) {
           damage *= 1.5;
-          message = "Kritischer Treffer!", "system";
+          (message = "Kritischer Treffer!"), "system";
         }
         break;
       case "konter":
@@ -137,13 +137,13 @@ io.on("connection", (socket) => {
         damage *= 0.7;
         break;
       case "tod":
-        // Hoher Schaden, aber nur 50% Trefferchance
-        if (Math.random() < 0.5) {
+        // Hoher Schaden, aber nur 20% Trefferchance
+        if (Math.random() < 0.2) {
           damage *= 2;
-          message = "Tödlicher Treffer!", "system";
+          (message = "Tödlicher Treffer!"), "system";
         } else {
           damage = 0;
-          message = "Der Angriff verfehlt sein Ziel!", "system";
+          (message = "Der Angriff verfehlt sein Ziel!"), "system";
         }
         break;
     }
@@ -162,10 +162,15 @@ io.on("connection", (socket) => {
       gameStateDb[roomId].playerTurn = gameStateDb[roomId].player;
     }
 
-    const gameState = gameStateDb[roomId]
-    const animationTarget = defender + 1
+    const gameState = gameStateDb[roomId];
+    const animationTarget = defender + 1;
 
-    io.to(roomId).emit("updateGameState", ({ gameState, message, attackType, animationTarget }));
+    io.to(roomId).emit("updateGameState", {
+      gameState,
+      message,
+      attackType,
+      animationTarget,
+    });
   });
 
   socket.on("disconnect", () => {

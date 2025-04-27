@@ -426,31 +426,16 @@ h6 {
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
+.result-text {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
 .victory .result-title {
   color: var(--success-color);
 }
 
 .defeat .result-title {
   color: var(--danger-color);
-}
-
-.trophy-container,
-.medic-container {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  margin-bottom: 2rem;
-}
-
-.victor-fighter,
-.defeated-fighter {
-  width: 200px;
-  height: auto;
-  border-radius: 10px;
-}
-
-.victory-text,
-.defeat-text {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
 }

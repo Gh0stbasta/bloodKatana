@@ -131,6 +131,14 @@ function enableAttackButtons(enable) {
 
 function updateHealthBars(playerHealth, enemyHealth) {
   // Spieler-Gesundheitsbalken
+  if (playerHealth < 0) {
+    playerHealth = 0;
+  }
+
+  if (enemyHealth < 0) {
+    enemyHealth = 0;
+  }
+
   const playerHealthBar = document.getElementById("playerHP");
   if (playerHealthBar) {
     playerHealthBar.style.width = `${playerHealth}%`;
@@ -264,7 +272,37 @@ function endBattle(playerWon) {
 
   // Zeige die Sieges- oder Niederlagen-Animation
   setTimeout(function () {
-    showBattleResult(playerWon);
+    const resultDisplay = document.createElement("div");
+    resultDisplay.className = "result-display";
+
+    const resultTitle = document.createElement("h1");
+    resultTitle.className = "result-title";
+
+    const resultText = document.createElement("h2");
+    resultText.className = "result-text";
+
+    if (playerWon) {
+      resultTitle.textContent = "SIEG";
+      resultText.textContent = "Mr. Miagi wäre stolz auf dich!";
+      resultDisplay.classList.add("victory");
+    } else {
+      resultTitle.textContent = "NIEDERLAGE";
+      resultText.textContent = "Du kleines Stück Scheiße hast verloren";
+      resultDisplay.classList.add("defeat");
+    }
+
+    const backButton = document.getElementById("backToDashboard");
+    if (backButton) {
+      backButton.addEventListener("click", function () {
+        window.location.href = "dashboard.html";
+      });
+    }
+    resultDisplay.classList.add("visible");
+
+    resultDisplay.appendChild(resultTitle);
+    resultDisplay.appendChild(resultText);
+    resultDisplay.appendChild(backButton);
+    document.body.appendChild(resultDisplay);
   }, 2000);
 }
 
@@ -272,7 +310,6 @@ socket.emit("joinGame", setupPlayerInRoom);
 
 socket.on("startGame", ({ roomId, gameState }) => {
   clientGamestate = gameState;
-  console.log(clientGamestate);
   setupArena(gameState);
   startBattle(gameState);
 });
@@ -281,7 +318,6 @@ socket.on(
   "updateGameState",
   ({ gameState, message, attackType, animationTarget }) => {
     clientGamestate = gameState;
-    console.log(gameState);
 
     // Play attack animation
     if (animationTarget === clientGamestate.playerCharacter.id) {
@@ -318,23 +354,25 @@ socket.on(
 
     // Check if the game is over
     // Prüfen, ob der Gegner besiegt wurde
-    if (enemyHealth <= 0) {
-      if (clientGamestate.player === playerName) {
-        endBattle(true);
-      } else {
-        endBattle(false);
+    setTimeout(() => {
+      if (enemyHealth <= 0) {
+        if (clientGamestate.player === playerName) {
+          endBattle(true);
+        } else {
+          endBattle(false);
+        }
+        return;
       }
-      return;
-    }
 
-    if (playerHealth <= 0) {
-      if (clientGamestate.player === playerName) {
-        endBattle(false);
-      } else {
-        endBattle(true);
+      if (playerHealth <= 0) {
+        if (clientGamestate.player === playerName) {
+          endBattle(false);
+        } else {
+          endBattle(true);
+        }
+        return;
       }
-      return;
-    }
+    }, 1000);
 
     // Update turn information
     if (clientGamestate.playerTurn === playerName) {
