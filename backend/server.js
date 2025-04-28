@@ -20,8 +20,8 @@ const characters = [
   {
     id: 1,
     name: "Sōgō no Shisha",
-    attack: 30,
-    defense: 110,
+    attack: 60,
+    defense: 80,
   },
   {
     id: 2,
