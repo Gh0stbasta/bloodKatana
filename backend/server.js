@@ -87,7 +87,11 @@ io.on("connection", (socket) => {
         playerCharacter: games[roomId][0].chosenCharacter,
         enemyCharacter: games[roomId][1].chosenCharacter,
       };
-      gameStateDb.push(gameState);
+      if (!gameStateDb[roomId]) {
+        gameStateDb.push(gameState);
+      } else {
+        gameStateDb[roomId] = gameState;
+      }
 
       io.to(roomId).emit("startGame", { roomId, gameState });
     }
