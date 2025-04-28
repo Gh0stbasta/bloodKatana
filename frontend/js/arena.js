@@ -31,6 +31,23 @@ if (backButton) {
   });
 }
 
+const chatInput = document.getElementById("chat-input");
+if (chatInput) {
+  chatInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      const message = chatInput.value.trim();
+      if (message) {
+        socket.emit("chatMessage", {
+          roomId: room,
+          sender: playerName,
+          message: message,
+        });
+        chatInput.value = "";
+      }
+    }
+  });
+}
+
 function setupArena(gamestate) {
   // Spieler-Kämpfer einrichten
   const arenaRow = document.getElementById("arena-row");
@@ -52,7 +69,8 @@ function setupArena(gamestate) {
     // Name und Statistiken anzeigen
     const playerName = playerFighter.querySelector(".fighter-name");
     if (playerName) {
-      playerName.textContent = gamestate.playerCharacter.name; // hier muss der Name aus dem objekt hin
+      playerName.textContent =
+        gamestate.player + ": " + gamestate.playerCharacter.name;
     }
 
     const playerStats = playerFighter.querySelector(".fighter-stats");
@@ -74,7 +92,8 @@ function setupArena(gamestate) {
     // Name und Statistiken anzeigen
     const enemyName = enemyFighter.querySelector(".fighter-name");
     if (enemyName) {
-      enemyName.textContent = gamestate.enemyCharacter.name;
+      enemyName.textContent =
+        gamestate.enemy + ": " + gamestate.enemyCharacter.name;
     }
 
     const enemyStats = enemyFighter.querySelector(".fighter-stats");
@@ -384,3 +403,16 @@ socket.on(
     }
   }
 );
+
+socket.on("newChatMessage", ({ sender, message }) => {
+  const chatBox = document.getElementById("chat-box");
+  if (chatBox) {
+    const messageElement = document.createElement("div");
+    messageElement.className = "chat-message";
+    messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+    chatBox.appendChild(messageElement);
+
+    // Scroll to the bottom of the chat box
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+});

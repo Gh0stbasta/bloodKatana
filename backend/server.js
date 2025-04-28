@@ -173,6 +173,17 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("chatMessage", ({ roomId, sender, message }) => {
+    if (!games[roomId]) return;
+
+    const chatMessage = {
+      sender,
+      message,
+    };
+
+    io.to(roomId).emit("newChatMessage", chatMessage);
+  });
+
   socket.on("disconnect", () => {
     for (const roomId in games) {
       games[roomId] = games[roomId].filter((id) => id !== socket.id);
