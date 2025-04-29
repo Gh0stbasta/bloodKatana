@@ -322,7 +322,7 @@ function endBattle(playerWon) {
     resultDisplay.appendChild(resultText);
     resultDisplay.appendChild(backButton);
     document.body.appendChild(resultDisplay);
-  }, 2000);
+  }, 500);
 }
 
 socket.emit("joinGame", setupPlayerInRoom);
