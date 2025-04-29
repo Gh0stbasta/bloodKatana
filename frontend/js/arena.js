@@ -290,39 +290,37 @@ function endBattle(playerWon) {
   localStorage.clear();
 
   // Zeige die Sieges- oder Niederlagen-Animation
-  setTimeout(function () {
-    const resultDisplay = document.createElement("div");
-    resultDisplay.className = "result-display";
+  const resultDisplay = document.createElement("div");
+  resultDisplay.className = "result-display";
 
-    const resultTitle = document.createElement("h1");
-    resultTitle.className = "result-title";
+  const resultTitle = document.createElement("h1");
+  resultTitle.className = "result-title";
 
-    const resultText = document.createElement("h2");
-    resultText.className = "result-text";
+  const resultText = document.createElement("h2");
+  resultText.className = "result-text";
 
-    if (playerWon) {
-      resultTitle.textContent = "SIEG";
-      resultText.textContent = "Mr. Miagi wäre stolz auf dich!";
-      resultDisplay.classList.add("victory");
-    } else {
-      resultTitle.textContent = "NIEDERLAGE";
-      resultText.textContent = "Du kleines Stück Scheiße hast verloren";
-      resultDisplay.classList.add("defeat");
-    }
+  if (playerWon) {
+    resultTitle.textContent = "SIEG";
+    resultText.textContent = "Mr. Miagi wäre stolz auf dich!";
+    resultDisplay.classList.add("victory");
+  } else {
+    resultTitle.textContent = "NIEDERLAGE";
+    resultText.textContent = "Du kleines Stück Scheiße hast verloren";
+    resultDisplay.classList.add("defeat");
+  }
 
-    const backButton = document.getElementById("backToDashboard");
-    if (backButton) {
-      backButton.addEventListener("click", function () {
-        window.location.href = "dashboard.html";
-      });
-    }
-    resultDisplay.classList.add("visible");
+  const backButton = document.getElementById("backToDashboard");
+  if (backButton) {
+    backButton.addEventListener("click", function () {
+      window.location.href = "dashboard.html";
+    });
+  }
+  resultDisplay.classList.add("visible");
 
-    resultDisplay.appendChild(resultTitle);
-    resultDisplay.appendChild(resultText);
-    resultDisplay.appendChild(backButton);
-    document.body.appendChild(resultDisplay);
-  }, 500);
+  resultDisplay.appendChild(resultTitle);
+  resultDisplay.appendChild(resultText);
+  resultDisplay.appendChild(backButton);
+  document.body.appendChild(resultDisplay);
 }
 
 socket.emit("joinGame", setupPlayerInRoom);
