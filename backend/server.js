@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 const games = {};
 let gameStateDb = [];
 let roomCounter = 0;
-
+// Db of Characters where values can be changed
 const characters = [
   {
     id: 1,
