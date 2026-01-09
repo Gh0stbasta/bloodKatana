@@ -133,12 +133,17 @@ The server operates on Node.js's single-threaded event loop, processing events a
 ```javascript
 // Dynamic room creation with automatic matchmaking
 socket.on('createGame', () => {
-  const roomId = roomCounter;
+  const roomId = roomCounter;  // Assign current room ID
   socket.join(roomId);
   
+  // Initialize room if it doesn't exist
+  if (!games[roomId]) games[roomId] = [];
+  games[roomId].push(socket.id);
+  
+  // When room is full (2 players), notify both and increment counter
   if (games[roomId].length === 2) {
     io.to(roomId).emit('gameCreated', roomId);
-    roomCounter++;
+    roomCounter++;  // Next room will use roomCounter + 1
   }
 });
 ```
@@ -291,7 +296,16 @@ socket.on('attack', ({ roomId, playerName, attackType }) => {
   const game = games[roomId];
   if (!game || game.length < 2) return;
 
+  // Determine attacker and defender from game state
+  const attacker = gameStateDb[roomId].player === playerName 
+    ? gameStateDb[roomId].playerCharacter 
+    : gameStateDb[roomId].enemyCharacter;
+  const opponent = gameStateDb[roomId].player === playerName
+    ? gameStateDb[roomId].enemy
+    : gameStateDb[roomId].player;
+
   // Calculate damage based on character stats & attack type
+  const attackValue = attacker.attack;
   let damage = attackValue * (Math.random() * 0.4 + 0.8);
   
   // Apply attack modifiers
