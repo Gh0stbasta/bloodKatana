@@ -6,6 +6,10 @@
 
 > **Real-time multiplayer engine** demonstrating bidirectional WebSocket communication for low-latency state synchronization.
 
+## 👥 Project Context
+
+**Collaborative Team Project** developed by a team of 5 developers using **Agile Scrum methodology**. Project management and task coordination were handled through **GitHub Projects**, enabling efficient sprint planning, backlog management, and cross-functional collaboration.
+
 ## 🎯 Core Features
 
 - **WebSocket Communication**: Persistent connections for sub-100ms latency
@@ -43,42 +47,7 @@ sequenceDiagram
 
 ## 🔧 Technical Implementation
 
-### Server-Side Event Handling
-```javascript
-io.on('connection', (socket) => {
-  // Room-based matchmaking
-  socket.on('createGame', () => {
-    const roomId = roomCounter;
-    socket.join(roomId);
-    if (games[roomId].length === 2) {
-      io.to(roomId).emit('gameCreated', roomId);
-      roomCounter++;
-    }
-  });
-
-  // State synchronization
-  socket.on('attack', ({ roomId, playerName, attackType }) => {
-    // Validate and update server state
-    gameStateDb[roomId].enemyHealth -= damage;
-    // Broadcast to all clients in room
-    io.to(roomId).emit('updateGameState', gameStateDb[roomId]);
-  });
-});
-```
-
-### Client-Side WebSocket Connection
-```javascript
-const socket = io();
-
-// Listen for state updates
-socket.on('updateGameState', ({ gameState }) => {
-  clientGamestate = gameState;
-  updateUI(gameState);
-});
-
-// Emit actions to server
-socket.emit('attack', { roomId, playerName, attackType });
-```
+The engine implements server-side event handling for room-based matchmaking and state synchronization. Client-side WebSocket connections listen for state updates and emit player actions to the server. All game logic and validation occur server-side to ensure consistency across connected clients.
 
 ## 💡 Key Challenges Solved
 
